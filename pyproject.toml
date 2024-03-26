@@ -23,6 +23,7 @@ sqlalchemy = "2.0.28"
 typing-extensions = "4.10.0"
 werkzeug = "3.0.1"
 python-dotenv = "^1.0.1"
+gunicorn = "^21.2.0"
 
 [build-system]
 requires = ["poetry-core"]
