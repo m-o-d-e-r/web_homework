@@ -20,8 +20,8 @@ ENV VIRTUAL_ENV=/app/.venv \
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
-COPY api ./api
+VOLUME ["/api"]
 
 EXPOSE 8080
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "-w", "4", "api.__main__:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "-w", "4", "--reload", "--access-logfile", "/dev/stdout", "--error-log", "/dev/stderr", "api.__main__:app"]

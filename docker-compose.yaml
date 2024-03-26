@@ -38,6 +38,8 @@ services:
       - "8080:8080"
     networks:
       - web_homework_network
+    volumes:
+      - "./api:/api"
     depends_on:
       - web_homework_db
 
@@ -50,5 +52,8 @@ services:
       - "80:80"
     networks:
       - web_homework_network
+    volumes:
+      - "./site:/var/www/html"
+
     depends_on:
       - web_homework_api
