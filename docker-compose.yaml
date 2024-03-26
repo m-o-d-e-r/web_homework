@@ -3,6 +3,10 @@ version: '1.0'
 volumes:
   web_homework_db:
 
+networks:
+  web_homework_network:
+    name: web_homework_network
+
 services:
   web_homework_db:
     image: postgres
@@ -15,6 +19,27 @@ services:
       - "5432:5432"
     volumes:
       - web_homework_db:/var/lib/postgresql/data
+    networks:
+      - web_homework_network
+
+  web_homework_api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.api.yaml
+    container_name: web_homework_api
+    environment:
+      API_RUN_PORT: 8080
+      API_DB_HOST: web_homework_db
+      API_DB_PORT: 5432
+      API_DB_NAME: shop
+      API_DB_USER: postgres
+      API_DB_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - web_homework_network
+    depends_on:
+      - web_homework_db
 
   web_homework_site:
     build:
@@ -22,4 +47,8 @@ services:
       dockerfile: ./Dockerfile.httpd.yaml
     container_name: web_homework_site
     ports:
-      - "8080:80"
+      - "80:80"
+    networks:
+      - web_homework_network
+    depends_on:
+      - web_homework_api

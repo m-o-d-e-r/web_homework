@@ -1,5 +1,6 @@
 
 from api.utils.app import create_app
+from api.utils.config_reader import get_config
 
 
 app = create_app()
@@ -12,4 +13,4 @@ if __name__ == "__main__":
     app.register_blueprint(admin_blueprint)
 
     print(app.url_map)
-    app.run(port=8080, debug=True)
+    app.run(host="0.0.0.0", port=get_config().API_RUN_PORT, debug=True)
