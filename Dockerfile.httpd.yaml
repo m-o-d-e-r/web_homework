@@ -1,0 +1,16 @@
+FROM debian
+
+EXPOSE 80
+
+RUN apt update && \
+    apt install -y apache2 && \
+    apt install -y php libapache2-mod-php
+
+
+COPY ./site /var/www/site
+COPY ./httpd_conf/site.conf  /etc/apache2/sites-available/site.conf
+
+RUN a2ensite site && a2dissite 000-default
+
+
+CMD ["apachectl", "-D", "FOREGROUND"]
