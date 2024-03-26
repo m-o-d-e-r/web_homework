@@ -6,11 +6,11 @@ RUN apt update && \
     apt install -y apache2 && \
     apt install -y php libapache2-mod-php
 
+RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
-COPY ./site /var/www/site
-COPY ./httpd_conf/site.conf  /etc/apache2/sites-available/site.conf
+VOLUME ["/var/www/site"]
 
-RUN a2ensite site && a2dissite 000-default
-
+RUN a2dissite 000-default
 
 CMD ["apachectl", "-D", "FOREGROUND"]
