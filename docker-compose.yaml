@@ -15,3 +15,11 @@ services:
       - "5432:5432"
     volumes:
       - web_homework_db:/var/lib/postgresql/data
+
+  web_homework_site:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.httpd.yaml
+    container_name: web_homework_site
+    ports:
+      - "8080:80"
