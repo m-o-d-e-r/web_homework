@@ -16,9 +16,11 @@ body {
 
 .header {
     height: 7vh;
-    background-color: rgb(62, 104, 151);
+    background-color: rgba(62, 104, 151, 0.61);
     color: white;
     position: relative;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
 }
 
 .header_inner {
@@ -64,6 +66,7 @@ body {
     margin-right: 15px;
     font-size: 25px;
     transition: .3s;
+    cursor: pointer;
 }
 
 .navbar_item:hover {
@@ -182,6 +185,7 @@ body {
     background-color: #24262b;
     padding: 70px 0;
     position: relative;
+    margin-top: 30px;
 }
 
 .footer_container {
