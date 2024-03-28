@@ -1,0 +1,293 @@
+* {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    z-index: 1000;
+}
+
+html,
+body {
+    background-color: #2a2f3a;
+    width: 100%;
+}
+
+/* header section start */
+
+.header {
+    height: 7vh;
+    background-color: rgb(62, 104, 151);
+    color: white;
+    position: relative;
+}
+
+.header_inner {
+    height: inherit;
+    width: 80%;
+    margin: 0 auto;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.logo {
+    position: absolute;
+    left: 0;
+}
+
+.logo_text {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.navbar {
+    position: absolute;
+    right: 0;
+}
+
+
+.navbar_inner {
+    height: inherit;
+    list-style: none;
+    display: flex;
+}
+
+.navbar_item {
+    padding: 5px;
+
+    border-radius: 5px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 25px;
+    transition: .3s;
+}
+
+.navbar_item:hover {
+    background-color: rgb(62, 104, 151);
+}
+
+.navbar_inner a {
+    color: white;
+    height: inherit;
+    text-decoration: none;
+}
+
+/* header section end*/
+
+
+/* slider section start*/
+
+.slider {
+    width: 100%;
+
+    margin-bottom: 30px;
+}
+
+.slider_inner {
+    display: flex;
+
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider_arrow_area {
+    width: 5%;
+    height: 10%;
+    background-color: rgb(61, 64, 71);
+    cursor: pointer;
+    transition: .5s;
+}
+
+.slider_arrow_area:hover {
+    width: 7%;
+}
+
+.slider_left_arrow_area {
+    position: absolute;
+    left: 0;
+    border-top-right-radius: 15%;
+    border-bottom-right-radius: 15%;
+}
+
+.slider_right_arrow_area {
+    position: absolute;
+    right: 0;
+    border-top-left-radius: 15%;
+    border-bottom-left-radius: 15%;
+
+}
+
+.arrow-right,
+.arrow-left {
+    display: block;
+    margin: 30px auto;
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    border-top: 4px solid #bbbbbb;
+    border-left: 4px solid #bbbbbb;
+}
+
+.arrow-right {
+    transform: rotate(135deg);
+}
+
+.arrow-left {
+    transform: rotate(-45deg);
+}
+
+.slider_img_area {
+    height: 80vh;
+}
+
+.slider_img {
+    height: inherit;
+}
+
+.slider_paginator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.slider_paginator_item {
+    display: block;
+
+    width: 2%;
+    height: 5px;
+
+    margin-left: 5px;
+    margin-right: 5px;
+
+    background-color: #6b5d5d;
+}
+
+.paginator_item_active {
+    background-color: #bbbbbb;
+}
+
+/* slider section end*/
+
+
+/* footer section start */
+
+.footer {
+    background-color: #24262b;
+    padding: 70px 0;
+    position: relative;
+}
+
+.footer_container {
+    max-width: 1170px;
+    margin: auto;
+}
+
+.footer_row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.footer ul {
+    list-style: none;
+}
+
+.footer-col {
+    width: 25%;
+    padding: 0 15px;
+}
+
+.footer-col h4 {
+    font-size: 18px;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 35px;
+    font-weight: 500;
+    position: relative;
+}
+
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    background-color: #e91e63;
+    height: 2px;
+    box-sizing: border-box;
+    width: 50px;
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #ffffff;
+    padding-left: 8px;
+}
+
+.footer-col .social-links a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+
+.footer-col .social-links a:hover {
+    color: #24262b;
+    background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px) {
+    .footer-col {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width: 574px) {
+    .footer-col {
+        width: 100%;
+    }
+}
+
+/* footer section end */
+
+
+/* particles js start */
+
+#particles-js {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+/* particles js end */
