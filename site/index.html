@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lab</title>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body onload="fill_data()">
+    <header class="header">
+        <div class="header_inner">
+            <div class="logo">
+                <h2 class="logo_text">My Shop</h2>
+            </div>
+            <div class="navbar">
+                <ul class="navbar_inner">
+                    <li class="navbar_item"><a href="#">Home</a></li>
+                    <li class="navbar_item"><a href="#">Catalog</a></li>
+                    <li class="navbar_item"><a href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section class="slider">
+        <div class="slider_inner">
+            <div class="slider_arrow_area slider_left_arrow_area" onclick="slide_left()">
+                <div class="arrow-left"></div>
+            </div>
+            <div class="slider_img_area">
+                <img class="slider_img" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg">
+            </div>
+            <div class="slider_arrow_area slider_right_arrow_area" onclick="slide_right()">
+                <div class="arrow-right"></div>
+            </div>
+        </div>
+        <div class="slider_paginator"></div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer_container">
+            <div class="footer_row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">shipping</a></li>
+                        <li><a href="#">returns</a></li>
+                        <li><a href="#">order status</a></li>
+                        <li><a href="#">payment options</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
