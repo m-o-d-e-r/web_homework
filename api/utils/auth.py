@@ -8,6 +8,7 @@ import jwt
 from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
 from api.utils.redis_utils import redis_set_token, redis_load_token
+from api.utils.config_reader import get_config
 
 
 def load_user(user_id: int) -> Users:
@@ -18,7 +19,7 @@ def _extract_from_headers() -> JWTTokenPayloadSchema:
     raw_header = request.headers.get("Authorization")
     if raw_header:
         jwt_token = raw_header.removeprefix("Bearer ")
-        return read_token_payload(jwt_token)
+        return _read_token_payload(jwt_token)
 
 
 def require_access_token(func) -> JWTTokenPayloadSchema:
@@ -40,9 +41,9 @@ def require_refresh_token(func) -> JWTTokenPayloadSchema:
     return inner
 
 
-def read_token_payload(raw_jwt: str) -> JWTTokenPayloadSchema:
+def _read_token_payload(raw_jwt: str) -> JWTTokenPayloadSchema:
     return JWTTokenPayloadSchema(
-        **dict(jwt.decode(raw_jwt, "secret", algorithms=["HS256"]))
+        **dict(jwt.decode(raw_jwt, get_config().API_SECRET, algorithms=["HS256"]))
     )
 
 
@@ -61,7 +62,7 @@ def _create_jwt_token(user: Users, ttl: float) -> str:
     )
     return jwt.encode(
         jwt_payload.model_dump(),
-        "secret",
+        get_config().API_SECRET,
         algorithm="HS256"
         ), jwt_payload
 
