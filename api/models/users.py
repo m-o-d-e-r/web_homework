@@ -9,7 +9,11 @@ from api.utils.mixins import ModelToDictMixin
 
 class Users(db.Model, ModelToDictMixin):
     user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    role_id: Mapped[int] = mapped_column(Integer, ForeignKey("roles.role_id"))
+    role_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("roles.role_id"),
+        default=1
+    )
     login: Mapped[str] = mapped_column(String(length=25), nullable=False)
     password: Mapped[str] = mapped_column(String, nullable=False)
     registered: Mapped[str] = mapped_column(

@@ -14,3 +14,8 @@ class ForbiddenException(ProjectBaseException):
 class ValueException(ProjectBaseException):
     code = 400
     description = "Bad request, check fields"
+
+
+class MissingArgsException(ProjectBaseException):
+    code = 422
+    description = "Missing required arguments"

@@ -7,7 +7,7 @@ from api.schemas.catalog_schemas import CatalogFilters
 
 def get_product_list():
     result: list[Products] = Products.query.filter_by(
-        **CatalogFilters(**request.get_json()).to_dict(ignore_none=False)
+        **CatalogFilters(**request.get_json()).model_dump()
     ).all()
 
     return jsonify(
