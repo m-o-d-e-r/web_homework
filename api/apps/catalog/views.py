@@ -19,6 +19,8 @@ def get_detail_info(product_id: int):
     result = Products.query.filter_by(product_id=product_id).first()
 
     if not result:
-        raise ForbiddenException()
+        raise ForbiddenException(
+            "It's forbidden to interact with this resource"
+        )
 
     return jsonify(result.to_dict())
