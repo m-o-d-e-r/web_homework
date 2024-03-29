@@ -46,8 +46,8 @@ body {
 }
 
 .navbar {
-    position: absolute;
-    right: 0;
+    /*position: absolute;*/
+    /*right: 0;*/
 }
 
 
@@ -57,7 +57,7 @@ body {
     display: flex;
 }
 
-.navbar_item {
+.navbar_item, .login_reg_button {
     padding: 5px;
 
     border-radius: 5px;
@@ -69,15 +69,25 @@ body {
     cursor: pointer;
 }
 
-.navbar_item:hover {
+.navbar_item:hover, .login_reg_button:hover {
     background-color: rgb(62, 104, 151);
 }
 
-.navbar_inner a {
+.navbar_inner a, .login_reg_button a {
     color: white;
     height: inherit;
     text-decoration: none;
 }
+
+
+
+.login_reg_container {
+    position: absolute;
+    right: 0;
+
+    display: flex;
+}
+
 
 /* header section end*/
 

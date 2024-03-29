@@ -2,6 +2,8 @@ from typing import Any
 
 from sqlalchemy.orm import class_mapper, ColumnProperty
 
+from api.utils.exceptions import MissingArgsException
+
 
 class ModelToDictMixin:
     def to_dict(self) -> dict[str, Any]:
@@ -30,4 +32,9 @@ class HandleUnexpectedArgsMixin(type):
             if cls.__annotations__.get(key):
                 new_kwargs[key] = value
 
-        return super().__call__(*args, **new_kwargs)
+        try:
+            return super().__call__(*args, **new_kwargs)
+        except TypeError:
+            raise MissingArgsException()
+        except Exception:
+            raise MissingArgsException()

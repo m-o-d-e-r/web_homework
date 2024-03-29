@@ -1,16 +1,23 @@
-from werkzeug.exceptions import HTTPException
+
+class ProjectBaseException(Exception):
+    ...
 
 
-class ProjectBaseException(HTTPException):
-    code = 0
-    description = ""
+class RegistrationError(ProjectBaseException):
+    ...
+
+
+class LoginError(ProjectBaseException):
+    ...
 
 
 class ForbiddenException(ProjectBaseException):
-    code = 403
-    description = "Is forbidden to interact with this resource."
+    ...
 
 
 class ValueException(ProjectBaseException):
-    code = 400
-    description = "Bad request, check fields"
+    ...
+
+
+class MissingArgsException(ProjectBaseException):
+    ...

@@ -7,7 +7,7 @@ from api.schemas.catalog_schemas import CatalogFilters
 
 def get_product_list():
     result: list[Products] = Products.query.filter_by(
-        **CatalogFilters(**request.get_json()).to_dict(ignore_none=False)
+        **CatalogFilters(**request.get_json()).model_dump()
     ).all()
 
     return jsonify(
@@ -19,6 +19,8 @@ def get_detail_info(product_id: int):
     result = Products.query.filter_by(product_id=product_id).first()
 
     if not result:
-        raise ForbiddenException()
+        raise ForbiddenException(
+            "It's forbidden to interact with this resource"
+        )
 
     return jsonify(result.to_dict())

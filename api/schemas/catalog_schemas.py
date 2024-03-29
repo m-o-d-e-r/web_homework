@@ -1,13 +1,7 @@
-from dataclasses import dataclass
-
-from api.utils.mixins import SchemaToDictMixin, HandleUnexpectedArgsMixin
+from api.schemas.base_schema import APIBaseSchema
 
 
-@dataclass
-class CatalogFilters(
-    SchemaToDictMixin,
-    metaclass=HandleUnexpectedArgsMixin
-):
+class CatalogFilters(APIBaseSchema):
     name: str | None = None
     cost: float | None = None
     description: str | None = None
