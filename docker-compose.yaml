@@ -30,6 +30,17 @@ services:
     networks:
       - web_homework_network
 
+  web_homework_mongo:
+    container_name: web_homework_mongo
+    image: mongo:4.4.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    networks:
+      - web_homework_network
+
   web_homework_api:
     build:
       context: .
@@ -44,6 +55,11 @@ services:
       API_DB_PASSWORD: postgres
       API_REDIS_HOST: web_homework_redis
       API_REDIS_PORT: 6379
+      API_MONGO_USER: admin
+      API_MONGO_PASSWORD: admin
+      API_MONGO_HOST: web_homework_mongo
+      API_MONGO_PORT: 27017
+      API_MONGO_DB: shop
       API_SECRET: i_am_secret_lol
     ports:
       - "8080:8080"
@@ -53,6 +69,8 @@ services:
       - "./api:/api"
     depends_on:
       - web_homework_db
+      - web_homework_redis
+      - web_homework_mongo
 
   web_homework_site:
     build:
