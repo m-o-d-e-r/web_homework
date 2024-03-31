@@ -65,6 +65,5 @@ services:
       - web_homework_network
     volumes:
       - "./site:/var/www/html"
-
     depends_on:
       - web_homework_api
