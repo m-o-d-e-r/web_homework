@@ -14,7 +14,11 @@ class Users(db.Model, ModelToDictMixin):
         ForeignKey("roles.role_id"),
         default=1
     )
-    login: Mapped[str] = mapped_column(String(length=25), nullable=False)
+    login: Mapped[str] = mapped_column(
+        String(length=25),
+        nullable=False,
+        unique=True
+    )
     password: Mapped[str] = mapped_column(String, nullable=False)
     registered: Mapped[str] = mapped_column(
         DateTime,

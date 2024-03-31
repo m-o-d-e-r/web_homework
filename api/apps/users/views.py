@@ -17,7 +17,7 @@ from api.utils.auth import (
 def register_new_user():
     json_payload = RegisterUserSchema(**request.get_json())
 
-    if Users.query.filter_by(login=json_payload.login):
+    if Users.query.filter_by(login=json_payload.login).first():
         raise RegistrationError("User with the same login exists")
 
     try:
