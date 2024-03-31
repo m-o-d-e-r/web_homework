@@ -30,6 +30,17 @@ services:
     networks:
       - web_homework_network
 
+  web_homework_mongo:
+    container_name: web_homework_mongo
+    image: mongo:4.4.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    networks:
+      - web_homework_network
+
   web_homework_api:
     build:
       context: .
