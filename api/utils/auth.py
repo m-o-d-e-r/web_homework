@@ -9,10 +9,11 @@ from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
 from api.utils.redis_utils import redis_set_token, redis_load_token
 from api.utils.config_reader import get_config
+from api.utils.query_utils import get_user_or_none
 
 
 def load_user(user_id: int) -> Users:
-    return Users.query.filter_by(user_id=user_id).first()
+    return get_user_or_none(user_id)
 
 
 def _extract_from_headers() -> JWTTokenPayloadSchema:

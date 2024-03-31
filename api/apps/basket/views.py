@@ -1,6 +1,7 @@
 from flask import jsonify, request
 
 from api.utils.auth import require_access_token
+from api.utils.query_utils import get_product_or_none
 from api.utils.mongo_utils import get_mongo_table
 from api.schemas.basket_schemas import (
     MongoBasketSchema,
@@ -23,6 +24,9 @@ def get_basket_by_user_id(user: Users):
 @require_access_token
 def push_to_basket(user: Users):
     new_basket_item = PushBasketItemSchema(**request.get_json())
+
+    if not get_product_or_none(new_basket_item.product_id):
+        raise Exception("Invalid product ID")
 
     item_filter = {
         "user_id": user.user_id,
@@ -54,12 +58,17 @@ def push_to_basket(user: Users):
 
 @require_access_token
 def remove_from_basket(user: Users):
+    product_id = BasketProductIDSchema(
+        **request.get_json()
+    ).product_id
+
+    if not get_product_or_none(product_id):
+        raise Exception("Invalid product ID")
+
     get_mongo_table("basket").delete_many(
         {
             "user_id": user.user_id,
-            "product_id": BasketProductIDSchema(
-                **request.get_json()
-            ).product_id
+            "product_id": product_id
         }
     )
 
