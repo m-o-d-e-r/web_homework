@@ -4,7 +4,11 @@ from api.schemas.users_schemas import RegisterUserSchema
 from api.schemas.auth_schemas import UserLoginSchema
 from api.models.users import Users
 
-from api.utils.exceptions import RegistrationError, LoginError
+from api.utils.exceptions import (
+    InvalidLoginException,
+    InvalidPasswordException,
+    RegistrationError
+)
 from api.utils.hashing import get_hash, compare_password
 from api.utils.database import db
 from api.utils.auth import (
@@ -41,15 +45,15 @@ def register_new_user():
 def login_user_handler():
     json_payload = UserLoginSchema(**request.get_json())
 
-    current_user = Users.query.filter_by(
+    current_user: Users = Users.query.filter_by(
         login=json_payload.login
     ).first()
 
     if not current_user:
-        raise LoginError("Login or password is invalid")
+        raise InvalidLoginException()
 
     if not compare_password(current_user.password, json_payload.password):
-        raise LoginError("Login or password is invalid")
+        raise InvalidPasswordException()
 
     return jsonify(
         user_id=current_user.user_id,
@@ -60,6 +64,4 @@ def login_user_handler():
 
 @require_access_token
 def loguot_user_handler(user: Users):
-    import sys
-    print(user, file=sys.stderr)
-    return "123"
+    ...

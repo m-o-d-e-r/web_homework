@@ -8,6 +8,7 @@ from api.schemas.basket_schemas import (
     PushBasketItemSchema,
     BasketProductIDSchema
 )
+from api.utils.exceptions import InvalidProductException
 from api.models.users import Users
 
 
@@ -26,7 +27,7 @@ def push_to_basket(user: Users):
     new_basket_item = PushBasketItemSchema(**request.get_json())
 
     if not get_product_or_none(new_basket_item.product_id):
-        raise Exception("Invalid product ID")
+        raise InvalidProductException()
 
     item_filter = {
         "user_id": user.user_id,
@@ -63,7 +64,7 @@ def remove_from_basket(user: Users):
     ).product_id
 
     if not get_product_or_none(product_id):
-        raise Exception("Invalid product ID")
+        raise InvalidProductException()
 
     get_mongo_table("basket").delete_many(
         {

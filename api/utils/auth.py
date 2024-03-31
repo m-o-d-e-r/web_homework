@@ -4,9 +4,11 @@ from functools import wraps
 
 from flask import request
 import jwt
+from jwt.exceptions import ExpiredSignatureError
 
 from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
+from api.utils.exceptions import Base400Exception, JWTExpiredError
 from api.utils.redis_utils import redis_set_token, redis_load_token
 from api.utils.config_reader import get_config
 from api.utils.query_utils import get_user_or_none
@@ -36,16 +38,27 @@ def require_refresh_token(func) -> JWTTokenPayloadSchema:
         payload = _extract_from_headers()
 
         if not redis_load_token(_make_token_key(payload)):
-            raise Exception("Bad auth")
+            raise Base400Exception("Invalid refresh token provided")
 
         return func(load_user(payload.user_id), *args, **kwargs)
     return inner
 
 
 def _read_token_payload(raw_jwt: str) -> JWTTokenPayloadSchema:
-    return JWTTokenPayloadSchema(
-        **dict(jwt.decode(raw_jwt, get_config().API_SECRET, algorithms=["HS256"]))
-    )
+    try:
+        return JWTTokenPayloadSchema(
+            **dict(
+                jwt.decode(
+                    raw_jwt,
+                    get_config().API_SECRET,
+                    algorithms=["HS256"]
+                )
+            )
+        )
+    except ExpiredSignatureError as exc:
+        raise JWTExpiredError() from exc
+    except Exception as exc:
+        raise Base400Exception(str(exc)) from exc
 
 
 def _make_token_key(token_payload: JWTTokenPayloadSchema) -> str:
