@@ -28,3 +28,9 @@ class RegistrationError(Base400Exception):
 
 class JWTExpiredError(Base400Exception):
     _default_message = "JWT token is expired"
+    _default_status_code = 401
+
+
+class AuthHeaderUndefined(Base400Exception):
+    _default_message = "Authorization header is not provided"
+    _default_status_code = 401
