@@ -4,7 +4,8 @@ from flask import Blueprint
 from api.apps.users.views import (
     register_new_user,
     login_user_handler,
-    loguot_user_handler
+    loguot_user_handler,
+    verify_jwt_token
 )
 
 
@@ -26,4 +27,10 @@ users_blueprint.add_url_rule(
     "/logout",
     view_func=loguot_user_handler,
     methods=["POST"]
+)
+
+users_blueprint.add_url_rule(
+    "/verify_token",
+    view_func=verify_jwt_token,
+    methods=["GET"]
 )
