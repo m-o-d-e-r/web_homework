@@ -65,3 +65,10 @@ def login_user_handler():
 @require_access_token
 def loguot_user_handler(user: Users):
     ...
+
+
+@require_access_token
+def verify_jwt_token(user: Users):
+    return jsonify(
+        detail="JWT token is valid"
+    )
