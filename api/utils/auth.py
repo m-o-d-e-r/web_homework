@@ -8,7 +8,7 @@ from jwt.exceptions import ExpiredSignatureError
 
 from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
-from api.utils.exceptions import Base400Exception, JWTExpiredError
+from api.utils.exceptions import Base400Exception, JWTExpiredError, AuthHeaderUndefined
 from api.utils.redis_utils import redis_set_token, redis_load_token
 from api.utils.config_reader import get_config
 from api.utils.query_utils import get_user_or_none
@@ -23,6 +23,8 @@ def _extract_from_headers() -> JWTTokenPayloadSchema:
     if raw_header:
         jwt_token = raw_header.removeprefix("Bearer ")
         return _read_token_payload(jwt_token)
+
+    raise AuthHeaderUndefined()
 
 
 def require_access_token(func) -> JWTTokenPayloadSchema:

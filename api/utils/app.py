@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from api.utils.database import db
 from api.utils.config_reader import get_config
@@ -15,7 +16,7 @@ from api.models.product import Products
 from api.models.users import Users
 
 
-def handle_exception(exc: Exception):
+def handle_exception(exc: Exception | APIBaseException):
     response = jsonify(
         detail=str(exc)
     )
@@ -34,6 +35,8 @@ def create_app() -> Flask:
         get_config().API_DB_NAME
     )
     app.config["SECRET_KEY"] = "secret key"
+
+    CORS(app)
 
     app.register_error_handler(APIBaseException, handle_exception)
     app.register_error_handler(Exception, handle_exception)
