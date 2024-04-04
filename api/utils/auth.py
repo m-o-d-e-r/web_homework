@@ -8,8 +8,12 @@ from jwt.exceptions import ExpiredSignatureError
 
 from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
-from api.utils.exceptions import Base400Exception, JWTExpiredError, AuthHeaderUndefined
-from api.utils.redis_utils import redis_set_token, redis_load_token
+from api.utils.exceptions import (
+    Base400Exception, JWTExpiredError, AuthHeaderUndefined
+)
+from api.utils.redis_utils import (
+    redis_set_token, redis_load_token, redis_delete_token
+)
 from api.utils.config_reader import get_config
 from api.utils.query_utils import get_user_or_none
 
@@ -34,13 +38,15 @@ def require_access_token(func) -> JWTTokenPayloadSchema:
     return inner
 
 
-def require_refresh_token(func) -> JWTTokenPayloadSchema:
+def refresh_access_token(func) -> JWTTokenPayloadSchema:
     @wraps(func)
     def inner(*args, **kwargs):
         payload = _extract_from_headers()
+        token_key = _make_token_key(payload)
 
-        if not redis_load_token(_make_token_key(payload)):
+        if not redis_load_token(token_key):
             raise Base400Exception("Invalid refresh token provided")
+        redis_delete_token(token_key)
 
         return func(load_user(payload.user_id), *args, **kwargs)
     return inner
