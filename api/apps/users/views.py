@@ -14,7 +14,8 @@ from api.utils.database import db
 from api.utils.auth import (
     create_access_token,
     create_refresh_token,
-    require_access_token
+    require_access_token,
+    refresh_access_token
 )
 
 
@@ -62,9 +63,13 @@ def login_user_handler():
     )
 
 
-@require_access_token
-def loguot_user_handler(user: Users):
-    ...
+@refresh_access_token
+def renew_access_token(user: Users):
+    return jsonify(
+        user_id=user.user_id,
+        access_token=create_access_token(user),
+        refresh_token=create_refresh_token(user)
+    )
 
 
 @require_access_token
