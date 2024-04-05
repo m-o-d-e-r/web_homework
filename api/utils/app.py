@@ -14,6 +14,7 @@ from api.apps.basket.router import basket_blueprint
 from api.models.roles import Roles
 from api.models.product import Products
 from api.models.users import Users
+from api.utils.logger import get_logger
 
 
 def handle_exception(exc: Exception | APIBaseException):
@@ -22,6 +23,10 @@ def handle_exception(exc: Exception | APIBaseException):
     )
     if issubclass(exc.__class__, APIBaseException):
         response.status_code = exc.status_code
+
+    if isinstance(exc, Exception):
+        get_logger().error(str(exc))
+
     return response
 
 
