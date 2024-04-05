@@ -1,5 +1,5 @@
 import './Header.css'
-import Basket from './Basket';
+import AuthState from './AuthState';
 
 
 function Header() {
@@ -14,10 +14,8 @@ function Header() {
                         <li class="navbar_item"><a href="/">Home</a></li>
                         <li class="navbar_item"><a href="/catalog">Catalog</a></li>
                         <li class="navbar_item"><a href="/about">About</a></li>
-                        <ul class="login_reg_container">
-                            <li class="navbar_item"><a href="/login">Login</a></li>
-                            <li class="navbar_item"><a href="/registration">Sign up</a></li>
-                        </ul>
+
+                        <AuthState />
                     </ul>
                 </div>
             </div>
