@@ -26,7 +26,7 @@ users_blueprint.add_url_rule(
 users_blueprint.add_url_rule(
     "/refresh_token",
     view_func=renew_access_token,
-    methods=["POST"]
+    methods=["GET"]
 )
 
 users_blueprint.add_url_rule(
