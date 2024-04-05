@@ -3,10 +3,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./Login.css"
 import { Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { changeAuthState } from '../utils/actions';
 
 
 function Login() {
     const [GoToCatalog, setGoToCatalog] = React.useState(false);
+    const dispatch = useDispatch();
 
 
     const handleSubmit = (e) => {
@@ -29,7 +32,9 @@ function Login() {
             if (res.status === 200) {
                 Cookies.set('access_token', res.data["access_token"]);
                 Cookies.set('refresh_token', res.data["refresh_token"]);
+                alert(res.data["access_token"]);
                 setGoToCatalog(true);
+                dispatch(changeAuthState(true));
             }
         });
 

@@ -18,8 +18,8 @@ const DetailView = (props) => {
                 }
             })
             .catch(error => {
-                console.error('Error fetching product details:', error);
-                alert("Please login first");
+                /*console.error('Error fetching product details:', error);
+                alert("Please login first");*/
                 return;
             });
     }, [props.product_id]);

@@ -4,7 +4,7 @@ import "./Basket.css"
 function Basket() {
     return (
         <div>
-            123
+            Basket
         </div>
     );
 }
