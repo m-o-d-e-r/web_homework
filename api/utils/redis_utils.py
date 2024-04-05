@@ -16,9 +16,9 @@ def redis_set_token(key, value, ttl: int = 3000):
 
 
 def redis_load_token(key):
-    raw_payload: bytes = _redis_object.get(key)
+    raw_payload: str = _redis_object.get(key)
     if raw_payload:
-        return raw_payload.decode()
+        return raw_payload
 
 
 def redis_delete_token(key):
