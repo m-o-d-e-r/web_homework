@@ -5,7 +5,7 @@ from api.apps.basket.views import (
     get_basket_by_user_id,
     push_to_basket,
     remove_from_basket,
-    update_basket_data
+    update_product_count
 )
 
 
@@ -31,6 +31,6 @@ basket_blueprint.add_url_rule(
 
 basket_blueprint.add_url_rule(
     "/update_count",
-    view_func=update_basket_data,
+    view_func=update_product_count,
     methods=["POST"]
 )
