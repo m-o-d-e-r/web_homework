@@ -5,7 +5,7 @@ from api.utils.query_utils import get_product_or_none
 from api.utils.mongo_utils import get_mongo_table
 from api.schemas.basket_schemas import (
     MongoBasketSchema,
-    PushBasketItemSchema,
+    BasketItemMetaSchema,
     BasketProductIDSchema
 )
 from api.utils.exceptions import InvalidProductException
@@ -24,7 +24,7 @@ def get_basket_by_user_id(user: Users):
 
 @require_access_token
 def push_to_basket(user: Users):
-    new_basket_item = PushBasketItemSchema(**request.get_json())
+    new_basket_item = BasketItemMetaSchema(**request.get_json())
 
     if not get_product_or_none(new_basket_item.product_id):
         raise InvalidProductException()
@@ -75,4 +75,21 @@ def remove_from_basket(user: Users):
 
     return jsonify(
         detail="Product deleted successfully"
+    )
+
+
+@require_access_token
+def update_product_count(user: Users):
+    item_meta = BasketItemMetaSchema(**request.get_json())
+
+    get_mongo_table("basket").update_one(
+        {
+            "user_id": user.user_id,
+            "product_id": item_meta.product_id
+        },
+        {"count": item_meta.count}
+    )
+
+    return jsonify(
+        detail="Basket updated successfully"
     )
