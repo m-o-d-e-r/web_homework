@@ -2,7 +2,8 @@ import { createStore } from 'redux';
 import rootReducer from './reducers';
 
 const initialState = {
-  isAuthorized: false
+  isAuthorized: false,
+  isAdmin: false
 };
 
 const store = createStore(rootReducer, initialState);

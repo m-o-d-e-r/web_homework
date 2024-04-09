@@ -5,6 +5,11 @@ const rootReducer = (state, action) => {
                 ...state,
                 isAuthorized: action.payload
             };
+        case 'CHANGE_TO_ADMIN':
+            return {
+                ...state,
+                isAdmin: action.payload
+            };
         default:
             return state;
     }
