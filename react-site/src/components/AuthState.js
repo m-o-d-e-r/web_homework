@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import Basket from './Basket';
 import Cookies from 'js-cookie';
 import { changeAuthState } from '../utils/actions';
 
@@ -61,12 +60,15 @@ function AuthState() {
             {
                 isAuthorized === false ?
                 (
-                    <ul class="login_reg_container">
-                        <li class="navbar_item"><a href="/login">Login</a></li>
-                        <li class="navbar_item"><a href="/registration">Sign up</a></li>
+                    <ul className="login_reg_container">
+                        <li className="navbar_item"><a href="/login">Login</a></li>
+                        <li className="navbar_item"><a href="/registration">Sign up</a></li>
                     </ul>
                 ) : (
-                    <Basket />
+                    <ul className="login_reg_container">
+                        <li className="navbar_item"><a href="/basket">Basket</a></li>
+                        <li className="navbar_item"><a href="/logout">Log out</a></li>
+                    </ul>
                 )
             }
         </div>
