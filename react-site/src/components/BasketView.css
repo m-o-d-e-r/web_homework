@@ -1,0 +1,30 @@
+
+.basket_view_container {
+    width: 100%;
+}
+
+.basket_view_container_inner {
+    width: 70%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #bbbbbb;
+    padding: 10px;
+}
+
+.basket_view_title {
+    text-align: center;
+}
+
+.basket_view_items {
+    list-style: none;
+    padding: 0 50px;
+}
+
+.basket_view_item {
+    border: 1px solid beige;
+    display: flex;
+}
+
+.product_counter_controllers {
+    display: flex;
+}
