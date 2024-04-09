@@ -1,13 +1,15 @@
 from flask import jsonify, request
 
 from api.models.product import Products
+
 from api.utils.exceptions import ForbiddenException
 from api.utils.query_utils import get_product_or_none
 from api.schemas.catalog_schemas import CatalogFilters
 from api.utils.auth import require_access_token
 
 
-def get_product_list():
+@require_access_token
+def get_product_list(user):
     result: list[Products] = Products.query.filter_by(
         **{
             key: value

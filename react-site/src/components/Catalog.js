@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import "./Catalog.css";
 
@@ -7,12 +8,14 @@ function Catalog() {
 
     useEffect(() => {
         axios.post(
-            `http://localhost:8080/catalog/product_list`, {}
-        ).then(res => {
+            `http://localhost:8080/catalog/product_list`,
+            {},
+            { headers: { "Authorization": `Bearer ${Cookies.get('access_token')}` } }
+            ).then(res => {
             if (res.status === 200) {
                 setProducts(res.data["product_list"]);
             }
-        });
+        }).catch(err => {});
     }, []);
 
     return (
