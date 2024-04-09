@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 
 from api.utils.database import db
 from api.utils.config_reader import get_config
@@ -17,14 +18,18 @@ from api.models.users import Users
 from api.utils.logger import get_logger
 
 
-def handle_exception(exc: Exception | APIBaseException):
+def handle_exception(exc: Exception | APIBaseException | HTTPException):
     response = jsonify(
         detail=str(exc)
     )
+
     if issubclass(exc.__class__, APIBaseException):
         response.status_code = exc.status_code
 
-    if isinstance(exc, Exception):
+    elif issubclass(exc.__class__, HTTPException):
+        response.status_code = exc.code
+
+    elif issubclass(exc.__class__, Exception):
         get_logger().error(str(exc))
         response.status_code = 500
 

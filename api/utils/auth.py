@@ -78,6 +78,7 @@ def _create_jwt_token(user: Users, ttl: float) -> str:
     jwt_payload = JWTTokenPayloadSchema(
         user_id=user.user_id,
         login=user.login,
+        role_name=user.role.name,
         jti=uuid4().hex,
         iat=creation_time,
         exp=creation_time + ttl
