@@ -66,7 +66,7 @@ def _read_token_payload(raw_jwt: str) -> JWTTokenPayloadSchema:
     except ExpiredSignatureError as exc:
         raise JWTExpiredError() from exc
     except Exception as exc:
-        raise Base400Exception(str(exc)) from exc
+        raise Base400Exception(str(exc), 401) from exc
 
 
 def _make_token_key(token_payload: JWTTokenPayloadSchema) -> str:

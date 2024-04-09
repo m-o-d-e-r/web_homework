@@ -7,7 +7,7 @@ class MongoBasketSchema(APIBaseSchema):
     count: int = 1
 
 
-class PushBasketItemSchema(APIBaseSchema):
+class BasketItemMetaSchema(APIBaseSchema):
     product_id: int
     count: int = 1
 

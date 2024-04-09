@@ -6,6 +6,7 @@ import DetailViewPage from "./pages/DetailViewPage";
 import AboutPage from "./pages/AboutPage";
 import Loginpage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import BasketPage from './pages/BasketPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/registration" element={<SignupPage />} />
+        <Route path="/basket" element={<BasketPage />} />
       </Routes>
     </div>
   );

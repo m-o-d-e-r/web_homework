@@ -5,6 +5,7 @@ from collections import OrderedDict
 from dotenv import dotenv_values, find_dotenv
 
 from api.utils.singleton import Singleton
+from api.utils.logger import get_logger
 
 
 class EnvConfigReader(metaclass=Singleton):
@@ -37,7 +38,13 @@ class EnvConfigReader(metaclass=Singleton):
             Value of environment variable or None if not defined in config.
         """
 
-        return self.__config.get(__name)
+        value = self.__config.get(__name)
+        if value is None:
+            get_logger().warning(
+                f"env variable `{__name}` is not provided, default `{value}`"
+            )
+
+        return value
 
     @property
     def config(self) -> dict[str, str] | OrderedDict[str, str]:

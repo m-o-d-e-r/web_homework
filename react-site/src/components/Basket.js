@@ -1,10 +1,11 @@
 import "./Basket.css"
+import "./Header.css"
 
 
 function Basket() {
     return (
         <div>
-            Basket
+            <li class="navbar_item"><a href="/basket">Basket</a></li>
         </div>
     );
 }

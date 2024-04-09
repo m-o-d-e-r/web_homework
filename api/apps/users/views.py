@@ -7,7 +7,8 @@ from api.models.users import Users
 from api.utils.exceptions import (
     InvalidLoginException,
     InvalidPasswordException,
-    RegistrationError
+    RegistrationError,
+    APIBaseException
 )
 from api.utils.hashing import get_hash, compare_password
 from api.utils.database import db
@@ -30,8 +31,11 @@ def register_new_user():
             login=json_payload.login,
             password=get_hash(json_payload.password)
         )
-    except Exception as e:
-        raise e
+    except Exception as exc:
+        raise APIBaseException(
+            str(exc),
+            status_code=500
+        ) from exc
 
     db.session.add(new_user)
     db.session.commit()

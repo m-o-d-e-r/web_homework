@@ -3,6 +3,8 @@ from pymongo.errors import ServerSelectionTimeoutError
 
 from api.utils.singleton import Singleton
 from api.utils.config_reader import get_config
+from api.utils.exceptions import MongoConnectionError, Base500Error
+from api.utils.logger import get_logger
 
 
 __AUTH_STRING = f'mongodb://{get_config().API_MONGO_USER}:{get_config().API_MONGO_PASSWORD}@{get_config().API_MONGO_HOST}:{get_config().API_MONGO_PORT}'
@@ -19,7 +21,13 @@ def get_mongo_cursor():
     try:
         mongo_cursor.admin.command("ping")
     except ServerSelectionTimeoutError as exc:
-        raise Exception(
+        get_logger().critical(str(exc))
+        raise MongoConnectionError(
+            "Some of the services is unavailable, please try late"
+        ) from exc
+    except Exception as exc:
+        get_logger().critical(str(exc))
+        raise Base500Error(
             "Some of the services is unavailable, please try late"
         ) from exc
 
