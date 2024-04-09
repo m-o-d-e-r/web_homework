@@ -87,7 +87,7 @@ def update_product_count(user: Users):
             "user_id": user.user_id,
             "product_id": item_meta.product_id
         },
-        {"count": item_meta.count}
+        {"$set": {"count": item_meta.count if item_meta.count > 0 else 1}}
     )
 
     return jsonify(

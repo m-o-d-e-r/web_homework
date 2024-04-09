@@ -26,6 +26,7 @@ def handle_exception(exc: Exception | APIBaseException):
 
     if isinstance(exc, Exception):
         get_logger().error(str(exc))
+        response.status_code = 500
 
     return response
 
