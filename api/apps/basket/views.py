@@ -5,7 +5,7 @@ from api.utils.query_utils import get_product_or_none
 from api.utils.mongo_utils import get_mongo_table
 from api.schemas.basket_schemas import (
     MongoBasketSchema,
-    BasketItemMetaSchema,
+    BasketItemSchema,
     BasketProductIDSchema
 )
 from api.utils.exceptions import InvalidProductException
@@ -15,42 +15,56 @@ from api.models.users import Users
 @require_access_token
 def get_basket_by_user_id(user: Users):
     return jsonify(
-        basket=[
-            MongoBasketSchema(**i).model_dump()
-            for i in get_mongo_table("basket").find({"user_id": user.user_id})
-        ]
+        **MongoBasketSchema(
+            **get_mongo_table("basket").find_one({"user_id": user.user_id})
+        ).model_dump()
     )
 
 
 @require_access_token
 def push_to_basket(user: Users):
-    new_basket_item = BasketItemMetaSchema(**request.get_json())
+    new_basket_item = BasketItemSchema(**request.get_json())
 
     if not get_product_or_none(new_basket_item.product_id):
         raise InvalidProductException()
 
-    item_filter = {
-        "user_id": user.user_id,
-        "product_id": new_basket_item.product_id
-    }
-
-    product = get_mongo_table("basket").find_one(item_filter)
-    if product:
-        get_mongo_table("basket").update_one(
-            item_filter,
+    user_basket = get_mongo_table("basket").find_one({"user_id": user.user_id})
+    if not user_basket:
+        get_mongo_table("basket").insert_one(
             {
-                "$inc": {
-                    "count": 1
-                }
+                "user_id": user.user_id
+            },
+            {
+                "products": [new_basket_item.model_dump()]
             }
         )
-    else:
-        get_mongo_table("basket").insert_one(
-            MongoBasketSchema(
-                user_id=user.user_id,
-                **new_basket_item.model_dump()
-            ).model_dump()
+        return jsonify(
+            detail="Product added successfully"
         )
+
+    product = get_mongo_table("basket").find_one(
+        {
+            "user_id": user.user_id,
+            "products": {
+                "$elemMatch": {"product_id": new_basket_item.product_id}
+            }
+        }
+    )
+    if product:
+        return jsonify(
+            detail="Product has bean already added to basket"
+        )
+
+    get_mongo_table("basket").update_one(
+        {
+            "user_id": user.user_id
+        },
+        {
+            "$push": {
+                "products": new_basket_item.model_dump()
+            }
+        }
+    )
 
     return jsonify(
         detail="Product added successfully"
@@ -66,10 +80,16 @@ def remove_from_basket(user: Users):
     if not get_product_or_none(product_id):
         raise InvalidProductException()
 
-    get_mongo_table("basket").delete_many(
+    get_mongo_table("basket").update_one(
         {
-            "user_id": user.user_id,
-            "product_id": product_id
+            "user_id": user.user_id
+        },
+        {
+            "$pull": {
+                "products": {
+                    "product_id": product_id
+                }
+            }
         }
     )
 
@@ -80,14 +100,18 @@ def remove_from_basket(user: Users):
 
 @require_access_token
 def update_product_count(user: Users):
-    item_meta = BasketItemMetaSchema(**request.get_json())
+    item_meta = BasketItemSchema(**request.get_json())
 
     get_mongo_table("basket").update_one(
         {
             "user_id": user.user_id,
-            "product_id": item_meta.product_id
+            "products.product_id": item_meta.product_id
         },
-        {"$set": {"count": item_meta.count if item_meta.count > 0 else 1}}
+        {
+            "$set": {
+                "products.$.count": item_meta.count if item_meta.count > 0 else 1
+            }
+        }
     )
 
     return jsonify(
