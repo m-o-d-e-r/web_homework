@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 function Loginpage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <Login />
             <Footer />

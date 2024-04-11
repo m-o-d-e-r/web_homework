@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 function AdminPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <AdminPanel />
             <Footer />

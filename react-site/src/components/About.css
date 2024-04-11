@@ -1,8 +1,8 @@
 
 .about_container {
     width: 100%;
-    min-height: 80vh;
     position: relative;
+    margin-bottom: 30px;
 }
 
 .about_container_inner {

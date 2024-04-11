@@ -9,7 +9,7 @@ function DetailViewPage() {
     let { id } = useParams();
 
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <DetailView product_id={id}/>
             <Footer />
