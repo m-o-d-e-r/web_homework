@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
@@ -5,6 +6,10 @@ import "./AdminPanel.css"
 
 
 function AdminPanel() {
+    const [GoToProduct, setGoToProduct] = useState(false);
+    const [productID, setProductID] = useState();
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const product_name = document.getElementById("product_name").value;
@@ -26,11 +31,15 @@ function AdminPanel() {
             { headers: { "Authorization": `Bearer ${Cookies.get('access_token')}` } }
         ).then(res => {
             if (res.status === 200) {
-                return <Navigate to={"/catalog/" + res.data["product_id"]} />
+                setProductID(res.data["product_id"]);
+                setGoToProduct(true);
             }
         });
-
     };
+
+    if (GoToProduct) {
+        return <Navigate to={"/catalog/" + productID} />
+    }
 
     return (
         <div>
