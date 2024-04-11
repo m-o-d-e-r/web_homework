@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import "./BasketView.css"
@@ -74,6 +76,21 @@ function BasketView() {
             console.error("Error increasing count:", error);
         }
     };
+
+    const remove_product = async (productId) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:8080/basket/remove`,
+                { product_id: productId },
+                { headers: { "Authorization": `Bearer ${access_token}` } }
+            );
+            if (response.status === 200) {
+                fetchBasketData();
+            }
+        } catch (error) {
+            console.error("Error increasing count:", error);
+        }
+    };
     
 
     return (
@@ -85,13 +102,14 @@ function BasketView() {
                         {basketData.map((item) => (
                             <li className="basket_view_item" key={item.product_id}>
                                 <div className="basket_view_item_meta">
-                                    <h3>{item.productName}</h3>
+                                    <h3>'{item.productName}'</h3>
                                     <h3>${item.productCost} (${Math.round(item.productCost * item.count)})</h3>
                                 </div>
                                 <div className="product_counter_controllers">
                                     <div className="basket_view_controller minus" onClick={() => decrease_count(item.product_id, item.count)}></div>
                                     <div className="product_counter">{item.count}</div>
                                     <div className="basket_view_controller plus" onClick={() => increase_count(item.product_id, item.count)}></div>
+                                    <FontAwesomeIcon icon={faXmark} className="remove_item_button" size="3x" onClick={() => remove_product(item.product_id)} />
                                 </div>
                             </li>
                         ))}
