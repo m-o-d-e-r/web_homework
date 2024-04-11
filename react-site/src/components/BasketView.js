@@ -14,7 +14,7 @@ function BasketView() {
                 { headers: { "Authorization": `Bearer ${access_token}` } }
             );
             if (response.status === 200) {
-                const basketItems = response.data["basket"];
+                const basketItems = response.data["products"];
                 const detailedItems = await Promise.all(basketItems.map(async (item) => {
                     const productDetailResponse = await axios.get(
                         `http://localhost:8080/catalog/detail/${item.product_id}`,
