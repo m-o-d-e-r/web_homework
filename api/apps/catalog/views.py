@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from sqlalchemy import desc
 
 from api.models.product import Products
 
@@ -17,7 +18,7 @@ def get_product_list(user):
                 **request.get_json()
             ).model_dump().items() if value is not None
         }
-    ).all()
+    ).order_by(desc(Products.product_id)).all()
 
     return jsonify(
         product_list=[i.to_dict() for i in result]

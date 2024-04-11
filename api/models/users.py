@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from api.utils.database import db
 from api.utils.mixins import ModelToDictMixin
+from api.models.roles import Roles
 
 
 class Users(db.Model, ModelToDictMixin):
@@ -12,7 +13,8 @@ class Users(db.Model, ModelToDictMixin):
     role_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("roles.role_id"),
-        default=1
+        default=1,
+        nullable=False
     )
     login: Mapped[str] = mapped_column(
         String(length=25),
@@ -24,6 +26,8 @@ class Users(db.Model, ModelToDictMixin):
         DateTime,
         default=datetime.now
     )
+
+    role = db.relationship(Roles)
 
     def __repr__(self) -> str:
         return f"{self.user_id}: {self.login}"

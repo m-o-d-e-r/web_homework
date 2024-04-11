@@ -7,6 +7,8 @@ import AboutPage from "./pages/AboutPage";
 import Loginpage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import BasketPage from './pages/BasketPage';
+import AdminPage from './pages/AdminPage';
+import Logout from './components/Logout';
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/registration" element={<SignupPage />} />
         <Route path="/basket" element={<BasketPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </div>
   );

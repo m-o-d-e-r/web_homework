@@ -3,10 +3,10 @@ import './Footer.css';
 
 function Footer() {
     return (
-        <footer class="footer">
-            <div class="footer_container">
-                <div class="footer_row">
-                    <div class="footer-col">
+        <footer className="footer">
+            <div className="footer_container">
+                <div className="footer_row">
+                    <div className="footer-col">
                         <h4>company</h4>
                         <ul>
                             <li><a href="#">about us</a></li>
@@ -14,7 +14,7 @@ function Footer() {
                             <li><a href="#">privacy policy</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
+                    <div className="footer-col">
                         <h4>get help</h4>
                         <ul>
                             <li><a href="#">FAQ</a></li>
@@ -24,13 +24,13 @@ function Footer() {
                             <li><a href="#">payment options</a></li>
                         </ul>
                     </div>
-                    <div class="footer-col">
+                    <div className="footer-col">
                         <h4>follow us</h4>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        <div className="social-links">
+                            <a href="#"><i className="fab fa-twitter"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                            <a href="#"><i className="fab fa-github"></i></a>
+                            <a href="#"><i className="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>

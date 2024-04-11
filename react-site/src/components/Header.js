@@ -4,16 +4,16 @@ import AuthState from './AuthState';
 
 function Header() {
     return (
-        <header class="header">
-            <div class="header_inner">
-                <div class="logo">
-                    <h2 class="logo_text">My Shop</h2>
+        <header className="header">
+            <div className="header_inner">
+                <div className="logo">
+                    <h2 className="logo_text">My Shop</h2>
                 </div>
-                <div class="navbar">
-                    <ul class="navbar_inner">
-                        <li class="navbar_item"><a href="/">Home</a></li>
-                        <li class="navbar_item"><a href="/catalog">Catalog</a></li>
-                        <li class="navbar_item"><a href="/about">About</a></li>
+                <div className="navbar">
+                    <ul className="navbar_inner">
+                        <li className="navbar_item"><a href="/">Home</a></li>
+                        <li className="navbar_item"><a href="/catalog">Catalog</a></li>
+                        <li className="navbar_item"><a href="/about">About</a></li>
 
                         <AuthState />
                     </ul>
