@@ -22,7 +22,12 @@
     "react-tsparticles": "^2.12.2",
     "redux": "^5.0.1",
     "tsparticles": "^3.3.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "jwt-decode": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

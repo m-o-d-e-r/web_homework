@@ -75,13 +75,11 @@ services:
   web_homework_site:
     build:
       context: .
-      dockerfile: ./Dockerfile.httpd.yaml
+      dockerfile: ./Dockerfile.site.yaml
     container_name: web_homework_site
     ports:
       - "80:80"
     networks:
       - web_homework_network
-    volumes:
-      - "./site:/var/www/html"
     depends_on:
       - web_homework_api
