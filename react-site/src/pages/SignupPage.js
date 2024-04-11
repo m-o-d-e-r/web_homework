@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 function SignupPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <Registration />
             <Footer />

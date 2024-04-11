@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 function AboutPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <About />
             <Footer />

@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 function BasketPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <BasketView />
             <Footer />

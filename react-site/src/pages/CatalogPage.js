@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 function CatalogPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <Catalog />
             <Footer />

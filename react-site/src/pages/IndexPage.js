@@ -5,7 +5,7 @@ import Slider from "../components/Slider";
 
 function IndexPage() {
     return (
-        <div>
+        <div className="general_container">
             <Header />
             <Slider />
             <Footer />
