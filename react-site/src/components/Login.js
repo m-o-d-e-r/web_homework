@@ -5,6 +5,7 @@ import "./Login.css"
 import { Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changeAuthState } from '../utils/actions';
+import { API_URL } from '../utils/config';
 
 
 function Login() {
@@ -23,7 +24,7 @@ function Login() {
         }
 
         axios.post(
-            `http://localhost:8080/users/login`,
+            `${API_URL}/users/login`,
             {
                 "login": login,
                 "password": password

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 import { changeAuthState, changeToAdmin } from '../utils/actions';
+import { API_URL } from '../utils/config';
 
 
 function AuthState() {
@@ -19,7 +20,7 @@ function AuthState() {
             dispatch(changeAuthState(false));
         } else {
             axios.get(
-                `http://localhost:8080/users/verify_token`,
+                `${API_URL}/users/verify_token`,
                 { headers: { "Authorization": `Bearer ${access_token}` } }
             ).then(res => {
                 if (res.status === 200) {
@@ -45,7 +46,7 @@ function AuthState() {
 
             if (typeof refresh_token !== "undefined") {
                 axios.get(
-                    `http://localhost:8080/users/refresh_token`,
+                    `${API_URL}/users/refresh_token`,
                     { headers: { "Authorization": `Bearer ${refresh_token}` } }
                 ).then(res => {
                     if (res.status === 200) {

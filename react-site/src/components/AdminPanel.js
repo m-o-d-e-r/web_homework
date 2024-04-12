@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import "./AdminPanel.css"
+import { API_URL } from '../utils/config';
 
 
 function AdminPanel() {
@@ -22,7 +23,7 @@ function AdminPanel() {
         }
 
         axios.post(
-            `http://localhost:8080/admin/add_product`,
+            `${API_URL}/admin/add_product`,
             {
                 "name": product_name,
                 "cost": product_cost,

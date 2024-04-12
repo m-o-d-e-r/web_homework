@@ -3,6 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./Registration.css";
 import { Navigate } from 'react-router-dom';
+import { API_URL } from '../utils/config';
 
 
 function Registration() {
@@ -23,7 +24,7 @@ function Registration() {
         }
 
         axios.post(
-            `http://localhost:8080/users/registration`,
+            `${API_URL}/users/registration`,
             {
                 "login": login,
                 "password": password

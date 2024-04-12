@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./DetailView.css";
+import { API_URL } from '../utils/config';
 
 
 const DetailView = (props) => {
@@ -10,7 +11,7 @@ const DetailView = (props) => {
 
     useEffect(() => {
         axios.get(
-            `http://localhost:8080/catalog/detail/${props.product_id}`,
+            `${API_URL}/catalog/detail/${props.product_id}`,
             { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
         )
         .then(res => {
@@ -24,7 +25,7 @@ const DetailView = (props) => {
 
 
         axios.post(
-            `http://localhost:8080/basket/contains`,
+            `${API_URL}/basket/contains`,
             { "product_id": parseInt(props.product_id) },
             { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
         )
@@ -40,7 +41,7 @@ const DetailView = (props) => {
 
     const add_to_basket = () => {
         axios.post(
-            `http://localhost:8080/basket/push_product`,
+            `${API_URL}/basket/push_product`,
             {
                 "product_id": props.product_id
             },
