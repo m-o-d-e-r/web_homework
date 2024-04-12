@@ -22,6 +22,29 @@ def get_basket_by_user_id(user: Users):
 
 
 @require_access_token
+def check_product_exists(user: Users):
+    product_id = BasketProductIDSchema(
+        **request.get_json()
+    ).product_id
+
+    if not get_product_or_none(product_id):
+        raise InvalidProductException()
+
+    return jsonify(
+        contains=bool(
+            get_mongo_table("basket").find_one(
+                {
+                    "user_id": user.user_id,
+                    "products": {
+                        "$elemMatch": {"product_id": product_id}
+                    }
+                }
+            )
+        )
+    )
+
+
+@require_access_token
 def push_to_basket(user: Users):
     new_basket_item = BasketItemSchema(**request.get_json())
 
@@ -101,6 +124,9 @@ def remove_from_basket(user: Users):
 @require_access_token
 def update_product_count(user: Users):
     item_meta = BasketItemSchema(**request.get_json())
+
+    if not get_product_or_none(item_meta.product_id):
+        raise InvalidProductException()
 
     get_mongo_table("basket").update_one(
         {
