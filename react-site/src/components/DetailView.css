@@ -25,12 +25,20 @@
 }
 
 .add_product_button {
-    background-color: #343c4e;
-    color: #bbbbbb;
     padding: 5px 0;
     border: 0;
     border-radius: 5px;
     width: 100%;
     font-weight: 400;
     margin-top: auto;
+}
+
+.button_active {
+    background-color: rgb(80, 151, 9);
+    color: white;
+}
+
+.button_inactive {
+    background-color: #343c4e;
+    color: #bbbbbb;
 }

@@ -6,7 +6,8 @@ from api.apps.basket.views import (
     check_product_exists,
     push_to_basket,
     remove_from_basket,
-    update_product_count
+    update_product_count,
+    order_products
 )
 
 
@@ -40,4 +41,10 @@ basket_blueprint.add_url_rule(
     "/update_count",
     view_func=update_product_count,
     methods=["POST"]
+)
+
+basket_blueprint.add_url_rule(
+    "/buy_products",
+    view_func=order_products,
+    methods=["GET"]
 )
