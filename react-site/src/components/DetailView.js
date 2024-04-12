@@ -56,7 +56,6 @@ const DetailView = (props) => {
         setInBasket(true);
     };
 
-    
 
     return (
         <div className="detail_view_container">
@@ -67,7 +66,7 @@ const DetailView = (props) => {
                         <h3>{product.name}</h3>
                         <p>${product.cost}</p>
                         <p>{product.description}</p> <br />
-                        <button className="add_product_button" onClick={add_to_basket} disabled={inBasket}>Add to basket</button>
+                        <button className={"add_product_button " + (inBasket ? "button_inactive" : "button_active")} onClick={add_to_basket} disabled={inBasket}>Add to basket</button>
                     </div>
                 </div>
             </div>

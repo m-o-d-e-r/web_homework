@@ -143,3 +143,21 @@ def update_product_count(user: Users):
     return jsonify(
         detail="Basket updated successfully"
     )
+
+
+@require_access_token
+def order_products(user: Users):
+    get_mongo_table("basket").update_one(
+        {
+            "user_id": user.user_id
+        },
+        {
+            "$set": {"products": []}
+        }
+    )
+
+    # TODO: call payment system API, for instance
+
+    return jsonify(
+        detail="Ok"
+    )

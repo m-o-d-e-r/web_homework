@@ -8,6 +8,7 @@ import "./BasketView.css"
 function BasketView() {
     const access_token = Cookies.get('access_token');
     const [basketData, setBasketData] = useState([]);
+    const [summaryCost, setSummaryCost] = useState(0);
 
     const fetchBasketData = async () => {
         try {
@@ -40,6 +41,13 @@ function BasketView() {
     useEffect(() => {
         fetchBasketData();
     }, [access_token]);
+
+    useEffect(() => {
+        const totalCost = basketData.reduce((acc, item) => {
+            return acc + item.productCost * item.count;
+        }, 0);
+        setSummaryCost(totalCost);
+    }, [basketData]);
 
     const decrease_count = async (productId, currentCount) => {
         try {
@@ -91,6 +99,20 @@ function BasketView() {
             console.error("Error increasing count:", error);
         }
     };
+
+    const order_products = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/basket/buy_products`,
+                { headers: { "Authorization": `Bearer ${access_token}` } }
+            );
+            if (response.status === 200) {
+                fetchBasketData();
+            }
+        } catch (error) {
+            console.error("Error increasing count:", error);
+        }
+    };
     
 
     return (
@@ -114,6 +136,17 @@ function BasketView() {
                             </li>
                         ))}
                     </ul>
+                    {
+                        basketData.length > 0 ? (
+                            <div className="order_button_container">
+                                <div className="order_summary_info">
+                                    <h4>Final cost: ${summaryCost}</h4>
+                                </div>
+
+                                <button className="order_button" onClick={order_products}>Order</button>
+                            </div>
+                        ) : <></>
+                    }
                 </div>
             </div>
         </div>
