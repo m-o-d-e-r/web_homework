@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import "./Catalog.css";
+import { API_URL } from '../utils/config';
+
 
 function Catalog() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         axios.post(
-            `http://localhost:8080/catalog/product_list`,
+            `${API_URL}/catalog/product_list`,
             {},
             { headers: { "Authorization": `Bearer ${Cookies.get('access_token')}` } }
             ).then(res => {
