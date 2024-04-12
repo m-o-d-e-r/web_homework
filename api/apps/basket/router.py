@@ -3,6 +3,7 @@ from flask import Blueprint
 
 from api.apps.basket.views import (
     get_basket_by_user_id,
+    check_product_exists,
     push_to_basket,
     remove_from_basket,
     update_product_count
@@ -15,6 +16,12 @@ basket_blueprint.add_url_rule(
     "/",
     view_func=get_basket_by_user_id,
     methods=["GET"]
+)
+
+basket_blueprint.add_url_rule(
+    "/contains",
+    view_func=check_product_exists,
+    methods=["POST"]
 )
 
 basket_blueprint.add_url_rule(

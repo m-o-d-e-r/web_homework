@@ -6,22 +6,36 @@ import "./DetailView.css";
 
 const DetailView = (props) => {
     const [product, setProduct] = useState({});
+    const [inBasket, setInBasket] = useState(false);
 
     useEffect(() => {
         axios.get(
             `http://localhost:8080/catalog/detail/${props.product_id}`,
             { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
         )
-            .then(res => {
-                if (res.status === 200) {
-                    setProduct(res.data);
-                }
-            })
-            .catch(error => {
-                /*console.error('Error fetching product details:', error);
-                alert("Please login first");*/
-                return;
-            });
+        .then(res => {
+            if (res.status === 200) {
+                setProduct(res.data);
+            }
+        })
+        .catch(error => {
+            return;
+        });
+
+
+        axios.post(
+            `http://localhost:8080/basket/contains`,
+            { "product_id": parseInt(props.product_id) },
+            { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
+        )
+        .then(res => {
+            if (res.status === 200) {
+                setInBasket(res.data["contains"]);
+            }
+        })
+        .catch(error => {
+            return;
+        });
     }, [props.product_id]);
 
     const add_to_basket = () => {
@@ -39,7 +53,10 @@ const DetailView = (props) => {
             console.error('Error fetching product details:', error);
             alert("Please login first");
         });
+        setInBasket(true);
     };
+
+    
 
     return (
         <div className="detail_view_container">
@@ -50,7 +67,7 @@ const DetailView = (props) => {
                         <h3>{product.name}</h3>
                         <p>${product.cost}</p>
                         <p>{product.description}</p> <br />
-                        <button className="add_product_button" onClick={add_to_basket}>Add to basket</button>
+                        <button className="add_product_button" onClick={add_to_basket} disabled={inBasket}>Add to basket</button>
                     </div>
                 </div>
             </div>
