@@ -13,7 +13,7 @@ function Catalog() {
             `${API_URL}/catalog/product_list`,
             {},
             { headers: { "Authorization": `Bearer ${Cookies.get('access_token')}` } }
-            ).then(res => {
+        ).then(res => {
             if (res.status === 200) {
                 setProducts(res.data["product_list"]);
             }
@@ -26,7 +26,7 @@ function Catalog() {
                 {Array.isArray(products) && products.length > 0 ? (
                     products.map(item => (
                         <a className="product_item" href={'/catalog/' + item.product_id}>
-                            <img className="product_item_img" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMXqqfA8GAwIIFZKPDlqjpzhbCgnPvnBFVuXQhvIyGbg&s"} alt={item.name} />
+                            <img className="product_item_img" src={`${API_URL}/catalog/files/${item.product_id}`} alt={item.name} />
                             <div style={{padding: "20px"}}>
                                 <h3>{item.name}</h3>
                                 <p>${item.cost}</p>

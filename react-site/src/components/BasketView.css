@@ -44,6 +44,10 @@
     margin-left: 30px;
 }
 
+.remove_item_button:hover {
+    transform: scale(1.05);
+}
+
 .basket_view_controller {
     width: 70px;
     height: inherit;
@@ -54,6 +58,10 @@
     text-align: center;
     transition: .4s;
     cursor: pointer;
+}
+
+.basket_view_controller:hover {
+    transform: scale(1.05);
 }
 
 .minus::after {

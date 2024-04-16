@@ -8,6 +8,7 @@
 }
 
 .admin_title {
+    color: #2a2f3a;
     width: 100%;
     text-align: center;
 }
@@ -29,4 +30,11 @@
     background-color: rgb(80, 151, 9);
     color: white;
     padding: 5px;
+    border-radius: 5px;
+}
+
+.file_uploader_container {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
