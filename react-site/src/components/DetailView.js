@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./DetailView.css";
+import "./main-container.css"
 import { API_URL } from '../utils/config';
 
 
@@ -59,7 +60,7 @@ const DetailView = (props) => {
 
 
     return (
-        <div className="detail_view_container">
+        <div className="main_container">
             <div className="detail_view_inner">
                 <div className="detail_product_item">
                     <img className="product_item_img" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMXqqfA8GAwIIFZKPDlqjpzhbCgnPvnBFVuXQhvIyGbg&s"} alt={product.name} />

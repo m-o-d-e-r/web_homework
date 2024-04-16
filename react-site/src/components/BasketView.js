@@ -4,6 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import "./BasketView.css"
+import "./main-container.css"
 import { API_URL } from '../utils/config';
 
 
@@ -119,7 +120,7 @@ function BasketView() {
 
     return (
         <div>
-            <div className="basket_view_container">
+            <div className="main_container">
                 <div className="basket_view_container_inner">
                     <h2 className="basket_view_title">Basket</h2>
                     <ul className="basket_view_items">

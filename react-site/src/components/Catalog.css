@@ -1,9 +1,4 @@
 
-.products_container {
-    position: relative;
-    width: 100%;
-}
-
 .products_container_inner {
     width: 80%;
     margin: 0 auto;
@@ -18,17 +13,27 @@
     display: flex;
 
     background-color: #bbbbbb;
-    width: 25%;
+    min-width: calc(100% * (1/4) - 10px - 1px);
     height: 30%;
 
     margin: 20px;
     padding: 10px;
 
-    border-radius: 5px;
+    border-radius: 15px;
+    transition: .2s;
+    cursor: pointer;
+    
+    text-decoration: none;
+    color: #2a2f3a;
+}
+
+.product_item:hover {
+    transform: scale(1.08);
 }
 
 .product_item_img {
     height: 100%;
+    border-radius: 5px;
 }
 
 .product_item_desc {

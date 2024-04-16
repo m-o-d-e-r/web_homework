@@ -21,18 +21,18 @@ function Catalog() {
     }, []);
 
     return (
-        <section className="products_container">
+        <section className="main_container">
             <div className="products_container_inner">
                 {Array.isArray(products) && products.length > 0 ? (
                     products.map(item => (
-                        <div className="product_item">
+                        <a className="product_item" href={'/catalog/' + item.product_id}>
                             <img className="product_item_img" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMXqqfA8GAwIIFZKPDlqjpzhbCgnPvnBFVuXQhvIyGbg&s"} alt={item.name} />
                             <div style={{padding: "20px"}}>
-                                <a style={{textDecoration: "none", color: "#2a2f3a"}} href={'/catalog/' + item.product_id}><h3>{item.name}</h3></a>
+                                <h3>{item.name}</h3>
                                 <p>${item.cost}</p>
                                 <p>{item.description}</p> <br />
                             </div>
-                        </div>
+                        </a>
                     ))
                 ) : (
                     <p style={{color: "#bbbbbb"}}>No products available</p>

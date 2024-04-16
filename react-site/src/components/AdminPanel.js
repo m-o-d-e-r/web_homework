@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import "./AdminPanel.css"
+import "./AdminPanel.css";
+import "./main-container.css";
 import { API_URL } from '../utils/config';
 
 
@@ -44,7 +45,7 @@ function AdminPanel() {
 
     return (
         <div>
-            <div className="admin_container">
+            <div className="main_container">
                 <div className="admin_inner">
                     <h2 className="admin_title">Admin panel</h2>
                     <form className="product_creation_form" onSubmit={handleSubmit}>

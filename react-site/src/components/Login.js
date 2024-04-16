@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./Login.css"
+import "./main-container.css"
 import { Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changeAuthState } from '../utils/actions';
@@ -45,7 +46,7 @@ function Login() {
     }
 
     return (
-        <div className="login_section">
+        <div className="main_container">
             <form id="loginForm" className="login_form" onSubmit={handleSubmit}>
                 <label className="login_form_label">Login</label><br />
                 <input className="login_item" id="login" type="text" placeholder="Login" required /><br />

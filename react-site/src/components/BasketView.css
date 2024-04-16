@@ -1,8 +1,4 @@
 
-.basket_view_container {
-    width: 100%;
-}
-
 .basket_view_container_inner {
     width: 70%;
     margin: 0 auto;
@@ -91,6 +87,7 @@
     background-color: rgb(80, 151, 9);
     color: white;
     border: none;
+    border-radius: 5px;
     padding: 5px 15px;
     width: 70%;
 }

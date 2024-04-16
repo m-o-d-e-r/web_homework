@@ -1,10 +1,11 @@
 import "./About.css"
+import "./main-container.css"
 
 
 function About() {
     return (
         <div>
-            <section className="about_container">
+            <section className="main_container">
                 <div className="about_container_inner">
                     <h4 className="about_general_info">
                         <strong className="general_info_title">Short story</strong>
