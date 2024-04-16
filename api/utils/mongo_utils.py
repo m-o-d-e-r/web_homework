@@ -1,10 +1,19 @@
+from uuid import uuid1
 from pymongo import MongoClient
 from pymongo.errors import ServerSelectionTimeoutError
+import gridfs
+from bson.objectid import ObjectId
 
 from api.utils.singleton import Singleton
 from api.utils.config_reader import get_config
-from api.utils.exceptions import MongoConnectionError, Base500Error
+from api.utils.exceptions import (
+    MongoConnectionError,
+    Base500Error,
+    InvalidFileNameError
+)
 from api.utils.logger import get_logger
+
+from api.schemas.product_schemas import ProductImage
 
 
 __AUTH_STRING = f'mongodb://{get_config().API_MONGO_USER}:{get_config().API_MONGO_PASSWORD}@{get_config().API_MONGO_HOST}:{get_config().API_MONGO_PORT}'
@@ -38,5 +47,36 @@ _MONGO_CURSOR = get_mongo_cursor()
 _MONGO_DB_NAME = get_config().API_MONGO_DB
 
 
+_gridfs_object = gridfs.GridFS(_MONGO_CURSOR[_MONGO_DB_NAME])
+
+
 def get_mongo_table(table_name: str):
     return _MONGO_CURSOR[_MONGO_DB_NAME][table_name]
+
+
+def upload_file(product_id: int, mime_type: str, file):
+    get_mongo_table("files_metadata").insert_one(
+        ProductImage(
+            product_id=product_id,
+            file_id=str(_gridfs_object.put(file)),
+            mime_type=mime_type
+        ).model_dump()
+    )
+
+
+def get_file(product_id: int) -> tuple[str, bytes]:
+    try:
+        file_metadata = get_mongo_table("files_metadata").find_one(
+            {
+                "product_id": product_id
+            }
+        )
+
+        return (
+            _gridfs_object.get(
+                ObjectId(file_metadata["file_id"])
+            ),
+            file_metadata["mime_type"]
+        )
+    except Exception as exc:
+        raise InvalidFileNameError() from exc
