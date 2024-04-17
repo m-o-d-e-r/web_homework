@@ -23,7 +23,7 @@ sqlalchemy = "2.0.28"
 typing-extensions = "4.10.0"
 werkzeug = "3.0.1"
 python-dotenv = "^1.0.1"
-gunicorn = "^21.2.0"
+gunicorn = "^22.0.0"
 redis = {extras = ["hiredis"], version = "^5.0.3"}
 pyjwt = "^2.8.0"
 pydantic = "^2.6.4"
