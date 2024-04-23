@@ -27,10 +27,10 @@ function Catalog() {
                     products.map(item => (
                         <a className="product_item" href={'/catalog/' + item.product_id}>
                             <img className="product_item_img" src={`${API_URL}/catalog/files/${item.product_id}`} alt={item.name} />
-                            <div style={{padding: "20px"}}>
+                            <div style={{padding: "20px", textAlign: "left"}}>
                                 <h3>{item.name}</h3>
                                 <p>${item.cost}</p>
-                                <p>{item.description}</p> <br />
+                                <p>{item.description.slice(0, 100)}...</p> <br />
                             </div>
                         </a>
                     ))

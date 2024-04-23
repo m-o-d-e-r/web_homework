@@ -10,12 +10,11 @@
 
 .product_item {
     position: relative;
-    display: flex;
+    text-align: center;
 
     background-color: #bbbbbb;
-    min-width: calc(100% * (1/4) - 10px - 1px);
-    max-width: calc(100% * (1/2) - 10px - 1px);
-    height: 30%;
+    width: calc(100% * (1/4) - 10px - 1px);
+    max-height: 30%;
 
     margin: 20px;
     padding: 10px;
@@ -23,17 +22,17 @@
     border-radius: 15px;
     transition: .2s;
     cursor: pointer;
-    
+
     text-decoration: none;
     color: #2a2f3a;
 }
 
 .product_item:hover {
-    transform: scale(1.08);
+    transform: scale(1.03);
 }
 
 .product_item_img {
-    max-height: 300px;
+    max-height: 200px;
     border-radius: 5px;
 }
 
