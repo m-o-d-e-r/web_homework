@@ -1,10 +1,4 @@
 
-.about_container {
-    width: 100%;
-    position: relative;
-    margin-bottom: 30px;
-}
-
 .about_container_inner {
     margin: 0 auto;
     width: 80%;
@@ -36,4 +30,8 @@
 
 .teammate_info {
     padding: 50px 40px;
+}
+
+.teammate_name {
+    margin-top: 10px;
 }

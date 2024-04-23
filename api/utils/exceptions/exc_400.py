@@ -39,3 +39,18 @@ class JWTExpiredError(Base400Exception):
 class AuthHeaderUndefined(Base400Exception):
     _default_message = "Authorization header is not provided"
     _default_status_code = 401
+
+
+class FileUploadingError(Base400Exception):
+    _default_message = "Invalid file provided"
+    _default_status_code = 406
+
+
+class InvalidFileNameError(Base400Exception):
+    _default_message = "Invalid file name"
+    _default_status_code = 403
+
+
+class DataValidationError(Base400Exception):
+    _default_message = "Invalid data provided"
+    _default_status_code = 403

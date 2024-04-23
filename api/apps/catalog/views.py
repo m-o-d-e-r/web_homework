@@ -1,4 +1,5 @@
-from flask import jsonify, request
+from uuid import uuid1
+from flask import jsonify, request, send_file
 from sqlalchemy import desc
 
 from api.models.product import Products
@@ -7,6 +8,7 @@ from api.utils.exceptions import ForbiddenException
 from api.utils.query_utils import get_product_or_none
 from api.schemas.catalog_schemas import CatalogFilters
 from api.utils.auth import require_access_token
+from api.utils.mongo_utils import get_file
 
 
 @require_access_token
@@ -35,3 +37,17 @@ def get_detail_info(user, product_id: int):
         )
 
     return jsonify(result.to_dict())
+
+
+#@require_access_token
+def get_product_image(
+    #user, 
+    product_id: int
+):
+    file_data = get_file(product_id)
+
+    return send_file(
+        file_data[0],
+        mimetype=file_data[1],
+        download_name=uuid1().hex
+    )

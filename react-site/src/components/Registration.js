@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import "./Registration.css";
+import "./main-container.css"
 import { Navigate } from 'react-router-dom';
 import { API_URL } from '../utils/config';
 
@@ -44,7 +45,7 @@ function Registration() {
     }
 
     return (
-        <div className="registration_section">
+        <div className="main_container">
             <form id="registrationForm" className="registration_form" onSubmit={handleSubmit}>
                 <label className="registration_form_label">Registration</label><br />
                 <input id="login" className="registration_item" type="text" placeholder="Login" /><br />
