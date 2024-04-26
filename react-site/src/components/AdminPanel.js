@@ -20,6 +20,7 @@ function AdminPanel() {
         e.preventDefault();
         const product_name = document.getElementById("product_name").value;
         const product_cost = document.getElementById("product_cost").value;
+        const product_count = document.getElementById("product_count").value;
         const product_description = document.getElementById("product_description").value;
 
         if (product_name === '' || product_cost === '' || product_description === '') {
@@ -31,6 +32,7 @@ function AdminPanel() {
         formData.append("name", product_name);
         formData.append("cost", product_cost);
         formData.append("description", product_description);
+        formData.append("items_count", product_count);
         formData.append("product_image", file);
 
         axios.post(
@@ -65,6 +67,7 @@ function AdminPanel() {
                     <form className="product_creation_form" onSubmit={handleSubmit}>
                         <input className="form_item" id="product_name" type="text" placeholder="Name" />
                         <input className="form_item" id="product_cost" type="number" placeholder="Cost" />
+                        <input className="form_item" id="product_count" type="number" placeholder="Product count" />
                         <textarea className="form_item" id="product_description" placeholder="Description"></textarea>
                         <div className="file_uploader_container">
                             <center>

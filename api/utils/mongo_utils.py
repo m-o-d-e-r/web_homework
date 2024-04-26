@@ -64,6 +64,18 @@ def upload_file(product_id: int, mime_type: str, file):
     )
 
 
+def delete_file(product_id: int):
+    try:
+        file_metadata = get_mongo_table("files_metadata").find_one_and_delete(
+            {
+                "product_id": product_id
+            }
+        )
+        _gridfs_object.delete(ObjectId(file_metadata["file_id"]))
+    except Exception as exc:
+        raise InvalidFileNameError() from exc
+
+
 def get_file(product_id: int) -> tuple[str, bytes]:
     try:
         file_metadata = get_mongo_table("files_metadata").find_one(

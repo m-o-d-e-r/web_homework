@@ -9,7 +9,8 @@ from jwt.exceptions import ExpiredSignatureError
 from api.models.users import Users
 from api.schemas.auth_schemas import JWTTokenPayloadSchema
 from api.utils.exceptions import (
-    Base400Exception, JWTExpiredError, AuthHeaderUndefined
+    Base400Exception, JWTExpiredError, AuthHeaderUndefined,
+    ForbiddenResourceError
 )
 from api.utils.redis_utils import (
     redis_set_token, redis_load_token, redis_delete_token
@@ -31,11 +32,16 @@ def _extract_from_headers() -> JWTTokenPayloadSchema:
     raise AuthHeaderUndefined()
 
 
-def require_access_token(func) -> JWTTokenPayloadSchema:
-    @wraps(func)
-    def inner(*args, **kwargs):
-        return func(load_user(_extract_from_headers().user_id), *args, **kwargs)
-    return inner
+def require_access_token(admin_access: bool = True) -> JWTTokenPayloadSchema:
+    def _decorator(func):
+        @wraps(func)
+        def inner(*args, **kwargs):
+            current_user = load_user(_extract_from_headers().user_id)
+            if admin_access and current_user.role.name != "ADMIN":
+                raise ForbiddenResourceError()
+            return func(current_user, *args, **kwargs)
+        return inner
+    return _decorator
 
 
 def refresh_access_token(func) -> JWTTokenPayloadSchema:

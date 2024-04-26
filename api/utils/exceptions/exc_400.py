@@ -54,3 +54,8 @@ class InvalidFileNameError(Base400Exception):
 class DataValidationError(Base400Exception):
     _default_message = "Invalid data provided"
     _default_status_code = 403
+
+
+class ForbiddenResourceError(Base400Exception):
+    _default_message = "Forbidden to interact with this resource"
+    _default_status_code = 403

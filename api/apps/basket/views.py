@@ -8,11 +8,13 @@ from api.schemas.basket_schemas import (
     BasketItemSchema,
     BasketProductIDSchema
 )
+from api.utils.database import db
 from api.utils.exceptions import InvalidProductException
 from api.models.users import Users
+from api.models.product import Products
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def get_basket_by_user_id(user: Users):
     return jsonify(
         **MongoBasketSchema(
@@ -21,7 +23,7 @@ def get_basket_by_user_id(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def check_product_exists(user: Users):
     product_id = BasketProductIDSchema(
         **request.get_json()
@@ -44,7 +46,7 @@ def check_product_exists(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def push_to_basket(user: Users):
     new_basket_item = BasketItemSchema(**request.get_json())
 
@@ -94,7 +96,7 @@ def push_to_basket(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def remove_from_basket(user: Users):
     product_id = BasketProductIDSchema(
         **request.get_json()
@@ -121,7 +123,7 @@ def remove_from_basket(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def update_product_count(user: Users):
     item_meta = BasketItemSchema(**request.get_json())
 
@@ -145,8 +147,36 @@ def update_product_count(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def order_products(user: Users):
+    product_list = get_mongo_table("basket").find_one(
+        {
+            "user_id": user.user_id
+        }
+    ).get("products")
+
+    if not product_list:
+        return jsonify(
+            detail="No products added to basket"
+        )
+
+    for product in product_list:
+        product_item: Products = Products.query.filter(
+            Products.product_id == product["product_id"]
+        ).first()
+
+        if product_item.items_count < product["count"]:
+            return jsonify(
+                detail=f"Product {product_item.product_id} is out of stock"
+            )
+
+    for product in product_list:
+        product_item: Products = Products.query.filter(
+            Products.product_id == product["product_id"]
+        ).first()
+        product_item.items_count -= product["count"]
+        db.session.commit()
+
     get_mongo_table("basket").update_one(
         {
             "user_id": user.user_id

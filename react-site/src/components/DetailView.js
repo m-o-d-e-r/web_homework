@@ -13,31 +13,31 @@ const DetailView = (props) => {
     useEffect(() => {
         axios.get(
             `${API_URL}/catalog/detail/${props.product_id}`,
-            { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
+            { headers: { "Authorization": `Bearer ${Cookies.get("access_token")}` } }
         )
-        .then(res => {
-            if (res.status === 200) {
-                setProduct(res.data);
-            }
-        })
-        .catch(error => {
-            return;
-        });
+            .then(res => {
+                if (res.status === 200) {
+                    setProduct(res.data);
+                }
+            })
+            .catch(error => {
+                return;
+            });
 
 
         axios.post(
             `${API_URL}/basket/contains`,
             { "product_id": parseInt(props.product_id) },
-            { headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`} }
+            { headers: { "Authorization": `Bearer ${Cookies.get("access_token")}` } }
         )
-        .then(res => {
-            if (res.status === 200) {
-                setInBasket(res.data["contains"]);
-            }
-        })
-        .catch(error => {
-            return;
-        });
+            .then(res => {
+                if (res.status === 200) {
+                    setInBasket(res.data["contains"]);
+                }
+            })
+            .catch(error => {
+                return;
+            });
     }, [props.product_id]);
 
     const add_to_basket = () => {
@@ -47,14 +47,13 @@ const DetailView = (props) => {
                 "product_id": props.product_id
             },
             {
-                headers: {"Authorization" : `Bearer ${Cookies.get("access_token")}`},
+                headers: { "Authorization": `Bearer ${Cookies.get("access_token")}` },
 
             }
-        )
-        .catch(error => {
-            console.error('Error fetching product details:', error);
-            alert("Please login first");
-        });
+        ).catch(error => {
+                console.error('Error fetching product details:', error);
+                alert("Please login first");
+            });
         setInBasket(true);
     };
 
@@ -68,7 +67,18 @@ const DetailView = (props) => {
                         <h3>{product.name}</h3>
                         <p>${product.cost}</p>
                         <p>{product.description}</p> <br />
-                        <button className={"add_product_button " + (inBasket ? "button_inactive" : "button_active")} onClick={add_to_basket} disabled={inBasket}>Add to basket</button>
+                        <button
+                            className={
+                                "add_product_button "
+                                + (
+                                    product.items_count === 0 ? " button_zero_product " : (
+                                        inBasket ? " button_in_basket " : " button_active "
+                                    )
+                                )
+                            }
+                            onClick={add_to_basket}
+                            disabled={inBasket || product.items_count === 0}
+                        >Add to basket</button>
                     </div>
                 </div>
             </div>

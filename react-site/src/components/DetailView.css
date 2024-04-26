@@ -41,7 +41,12 @@
     color: white;
 }
 
-.button_inactive {
+.button_in_basket {
     background-color: #343c4e;
+    color: #bbbbbb;
+}
+
+.button_zero_product {
+    background-color: gray;
     color: #bbbbbb;
 }
