@@ -76,7 +76,7 @@ def renew_access_token(user: Users):
     )
 
 
-@require_access_token
+@require_access_token(admin_access=False)
 def verify_jwt_token(user: Users):
     return jsonify(
         detail="JWT token is valid"

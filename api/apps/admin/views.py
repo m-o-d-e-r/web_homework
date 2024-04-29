@@ -1,17 +1,21 @@
 from flask import request, jsonify
 
-from api.schemas.admin_schemas import CreateProductSchema
-from api.schemas.product_schemas import ProductImage
+from api.schemas.admin_schemas import (
+    CreateProductSchema,
+    UpdateProductCountSchema,
+    RemoveProductSchema
+)
 
 from api.models.product import Products
 
-from api.utils.mongo_utils import upload_file
+from api.utils.mongo_utils import upload_file, delete_file, get_mongo_table
 from api.utils.exceptions import FileUploadingError, DataValidationError
 from api.utils.database import db
-from api.utils.logger import get_logger
+from api.utils.auth import require_access_token
 
 
-def add_new_product():
+@require_access_token(admin_access=True)
+def add_new_product(user):
     if not request.files:
         raise FileUploadingError()
 
@@ -43,4 +47,44 @@ def add_new_product():
 
     return jsonify(
         product_id=new_product.product_id
+    )
+
+
+@require_access_token(admin_access=True)
+def change_product_count(user):
+    product_meta = UpdateProductCountSchema(**request.get_json())
+
+    current_product: Products = Products.query.filter(
+        Products.product_id == product_meta.product_id
+    ).first()
+    current_product.items_count = product_meta.items_count
+
+    db.session.commit()
+
+
+@require_access_token(admin_access=True)
+def remove_product(user):
+    product_meta = RemoveProductSchema(**request.get_json())
+
+    delete_file(product_meta.product_id)
+
+    get_mongo_table("basket").update_many(
+        {
+            "products.product_id": product_meta.product_id
+        },
+        {
+            "$pull": {
+                "products": {
+                    "product_id": product_meta.product_id
+                }
+            }
+        }
+    )
+
+    Products.query.filter(
+        Products.product_id == product_meta.product_id
+    ).delete()
+
+    return jsonify(
+        detail="Product deleted successfully"
     )
