@@ -69,7 +69,7 @@ function BasketView() {
             console.error("Error decreasing count:", error);
         }
     };
-    
+
     const increase_count = async (productId, currentCount) => {
         try {
             const response = await axios.post(

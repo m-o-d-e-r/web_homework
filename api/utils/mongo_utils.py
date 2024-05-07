@@ -17,7 +17,7 @@ from api.schemas.product_schemas import ProductImage
 
 
 __AUTH_STRING = f'mongodb://{get_config().API_MONGO_USER}:{get_config().API_MONGO_PASSWORD}@{get_config().API_MONGO_HOST}:{get_config().API_MONGO_PORT}'
-
+print(get_config().API_MONGO_HOST)
 
 class MongoConnector(MongoClient, metaclass=Singleton):
     def __init__(self, host: str, port: int = 27017, **kwargs) -> None:
@@ -71,8 +71,10 @@ def delete_file(product_id: int):
                 "product_id": product_id
             }
         )
-        _gridfs_object.delete(ObjectId(file_metadata["file_id"]))
+        if file_metadata:
+            _gridfs_object.delete(ObjectId(file_metadata["file_id"]))
     except Exception as exc:
+        get_logger().error(str(exc))
         raise InvalidFileNameError() from exc
 
 

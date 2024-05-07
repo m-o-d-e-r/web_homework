@@ -32,6 +32,7 @@
 
 .product_counter_controllers {
     display: flex;
+    justify-content: space-between;
 }
 
 .product_counter_controllers div {
