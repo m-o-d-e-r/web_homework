@@ -32,10 +32,8 @@
 
 .product_counter_controllers {
     display: flex;
-}
-
-.product_counter_controllers div {
-    margin: 0 10px;
+    justify-content: space-between;
+    min-width: 23%;
 }
 
 .remove_item_button {

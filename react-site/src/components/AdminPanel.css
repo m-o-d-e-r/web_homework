@@ -38,3 +38,47 @@
     text-align: center;
     margin-top: 10px;
 }
+
+.product_modification_container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.product_modification_container > *{
+    margin: 10px 0;
+}
+
+.admin_product_item {
+    text-decoration: none;
+    text-align: center;
+    color: #2a2f3a;
+    margin-bottom: 30px;
+}
+
+.admin_product_modification_area {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.admin_product_modification_area > input, textarea {
+    margin: 10px 0;
+}
+
+.admin_product_modification_area > textarea {
+    height: 60px;
+}
+
+.admin_product_item_img {
+    height: 50%;
+}
+
+.admin_product_item_controls {
+    display: flex;
+    justify-content: center;
+}
+
+.admin_product_item_controls > div {
+    margin: 0 5px;
+}

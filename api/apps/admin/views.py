@@ -2,8 +2,7 @@ from flask import request, jsonify
 
 from api.schemas.admin_schemas import (
     CreateProductSchema,
-    UpdateProductCountSchema,
-    RemoveProductSchema
+    UpdateProductSchema
 )
 
 from api.models.product import Products
@@ -51,39 +50,54 @@ def add_new_product(user):
 
 
 @require_access_token(admin_access=True)
-def change_product_count(user):
-    product_meta = UpdateProductCountSchema(**request.get_json())
+def update_product_info(user, product_id: int):
+    product_meta = UpdateProductSchema(**request.get_json())
 
     current_product: Products = Products.query.filter(
-        Products.product_id == product_meta.product_id
+        Products.product_id == product_id
     ).first()
-    current_product.items_count = product_meta.items_count
+
+    if product_meta.name:
+        current_product.name = product_meta.name
+
+    if product_meta.cost:
+        current_product.cost = product_meta.cost
+
+    if product_meta.description:
+        current_product.description = product_meta.description
+
+    if product_meta.items_count:
+        current_product.items_count = product_meta.items_count
 
     db.session.commit()
 
+    return jsonify(
+        detail="Product updated successfully"
+    )
+
 
 @require_access_token(admin_access=True)
-def remove_product(user):
-    product_meta = RemoveProductSchema(**request.get_json())
-
-    delete_file(product_meta.product_id)
+def remove_product(user, product_id: int):
+    delete_file(product_id)
 
     get_mongo_table("basket").update_many(
         {
-            "products.product_id": product_meta.product_id
+            "products.product_id": product_id
         },
         {
             "$pull": {
                 "products": {
-                    "product_id": product_meta.product_id
+                    "product_id": product_id
                 }
             }
         }
     )
 
     Products.query.filter(
-        Products.product_id == product_meta.product_id
+        Products.product_id == product_id
     ).delete()
+
+    db.session.commit()
 
     return jsonify(
         detail="Product deleted successfully"

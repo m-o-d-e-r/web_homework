@@ -69,7 +69,7 @@ function BasketView() {
             console.error("Error decreasing count:", error);
         }
     };
-    
+
     const increase_count = async (productId, currentCount) => {
         try {
             const response = await axios.post(
@@ -131,9 +131,11 @@ function BasketView() {
                                     <h3>${item.productCost} (${Math.round(item.productCost * item.count)})</h3>
                                 </div>
                                 <div className="product_counter_controllers">
-                                    <div className="basket_view_controller minus" onClick={() => decrease_count(item.product_id, item.count)}></div>
-                                    <div className="product_counter">{item.count}</div>
-                                    <div className="basket_view_controller plus" onClick={() => increase_count(item.product_id, item.count)}></div>
+                                    <div style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+                                        <div className="basket_view_controller minus" onClick={() => decrease_count(item.product_id, item.count)}></div>
+                                        <div className="product_counter">{item.count}</div>
+                                        <div className="basket_view_controller plus" onClick={() => increase_count(item.product_id, item.count)}></div>
+                                    </div>
                                     <FontAwesomeIcon icon={faXmark} className="remove_item_button" size="3x" onClick={() => remove_product(item.product_id)} />
                                 </div>
                             </li>
